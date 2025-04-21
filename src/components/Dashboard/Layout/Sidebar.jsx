@@ -26,7 +26,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { useLanguage } from '../../../context/LanguageContext';
 import { getTranslation } from '../../../utils/translations';
-import LoadingOverlay from '../CommonComponts/loadingOverlay';
+import LoadingOverlay from '../../LoadingOverlay';
 
 const { Sider } = Layout;
 

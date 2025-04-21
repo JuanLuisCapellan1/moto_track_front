@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../../../context/ThemeContext';
+import { useTheme } from '../../src/context/ThemeContext';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 

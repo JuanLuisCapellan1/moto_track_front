@@ -18,7 +18,7 @@ import CiudadanoDashboardPage from './pages/Dashboard/Ciudadano/CiudadanoDashboa
 import RegistrarPage from './pages/Dashboard/Ciudadano/RegistrarPage';
 import MotocicletasPage from './pages/Dashboard/Ciudadano/MotocicletasPage';
 import LandingPage from './pages/LandingPage/LandingPage';
-import LoadingOverlay from './components/Dashboard/CommonComponts/loadingOverlay';
+import LoadingOverlay from './components/LoadingOverlay';
 
 // Updated ProtectedRoute component that uses the auth context
 const ProtectedRoute = ({ children, allowedRoles }) => {
