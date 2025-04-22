@@ -65,31 +65,31 @@ const UserImage = styled(motion.img)`
 
 function TestimonialsUsers({ setCurrentUser, currentUser }) {
   const users = [
-    { name: 'Armando Balcacer' },
-    { name: 'Roamel Cabral' },
-    { name: 'Christopher Ciprian' },
-    { name: 'Eric Collado' },
-    { name: 'Manuel Guzman' },
-    { name: 'Ashli Cuevas' },
-    { name: 'Francis De la Cruz' },
-    { name: 'Alexander Gil' },
-    { name: 'Elersis Gomez' },
-    { name: 'Eduardo Grau' },
-    { name: 'Derek Hernandez' },
-    { name: 'Jackson Martinez' },
-    { name: 'Gabriela Melo' },
-    { name: 'Laura Ogando' },
-    { name: 'Juan Olivo' },
-    { name: 'Guillermo Pacanins' },
-    { name: 'Irving Penalo' },
-    { name: 'Leonardo Pezo' },
-    { name: 'Winston Pichardo' },
-    { name: 'Samuel Polanco' },
-    { name: 'Erick Savinon' },
-    { name: 'Eduardo Segura' },
-    { name: 'Jorge Tapia' },
-    { name: 'Alexander Trinidad' },
-    { name: 'Anni Yuen' } // Fixed: Changed from 'Anni Chang'
+    { name: 'Armando Balcacer', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287334/user-1_rmqj6n.png' },
+    { name: 'Roamel Cabral', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287335/user-2_w5nn3n.png' },
+    { name: 'Christopher Ciprian', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287335/user-3_ro4uty.png' },
+    { name: 'Eric Collado', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-4_oe7pv8.png' },
+    { name: 'Manuel Guzman', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-5_wd5byz.png' },
+    { name: 'Ashli Cuevas', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287335/user-6_euohfm.png' },
+    { name: 'Francis De la Cruz', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287334/user-7_bowkqq.png' },
+    { name: 'Alexander Gil', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-8_nwpupw.png' },
+    { name: 'Elersis Gomez', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287335/user-9_oyrf2f.png' },
+    { name: 'Eduardo Grau', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-10_b8dpvx.png' },
+    { name: 'Derek Hernandez', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-11_ku885p.png' },
+    { name: 'Jackson Martinez', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-12_mp2hmk.png' },
+    { name: 'Gabriela Melo', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-13_ywgbls.png' },
+    { name: 'Laura Ogando', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-14_jigwnq.png' },
+    { name: 'Juan Olivo', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-15_wymgmy.png' },
+    { name: 'Guillermo Pacanins', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-16_uuzi0d.png' },
+    { name: 'Irving Penalo', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287336/user-17_tu0xkj.png' },
+    { name: 'Leonardo Pezo', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287337/user-18_p3xusg.png' },
+    { name: 'Winston Pichardo', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287337/user-19_g2jvfz.png' },
+    { name: 'Samuel Polanco', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287337/user-20_accgs6.png' },
+    { name: 'Erick Savinon', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287337/user-21_ymrx1k.png' },
+    { name: 'Eduardo Segura', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287337/user-22_szvfn3.png' },
+    { name: 'Jorge Tapia', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287337/user-24_gwphtg.png' },
+    { name: 'Alexander Trinidad', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287337/user-25_qn5adw.png' },
+    { name: 'Anni Yuen', imageUrl: 'https://res.cloudinary.com/dx87s3lws/image/upload/v1745287337/user-23_gpx9ud.png' }
   ];
 
   // State to track if we're on mobile view
@@ -139,58 +139,30 @@ function TestimonialsUsers({ setCurrentUser, currentUser }) {
   // Helper function to render a row of users with staggered animations
   const renderUserRow = (usersList, rowIndex, placementDirection) => (
     <UserRow>
-      {usersList.map((user, index) => {
-        // Calculate the global index for the image source
-        let globalIndex;
-        
-        if (isMobile) {
-          // For mobile view with odd rows
-          globalIndex = rowIndex === 0 ? index + 1 : 
-                        rowIndex === 1 ? index + 10 : 
-                        index + 17;
-        } else {
-          // For desktop view
-          globalIndex = rowIndex === 0 ? index + 1 : index + 14;
-        }
-
-        // Special cases handling
-        let imageSrc = '';
-        if (user.name === 'Anni Yuen') {
-          imageSrc = '/src/assets/Lading/testimonials/user-25.png'; // Updated to correct image number
-        } else if (user.name === 'Leonardo Pezo') {
-          imageSrc = '/src/assets/Lading/testimonials/user-18.png'; // Updated to correct image number
-        } else if (user.name === 'Armando Balcacer') {
-          // Handle first user explicitly
-          imageSrc = '/src/assets/Lading/testimonials/user-1.png';
-        } else {
-          imageSrc = `/src/assets/Lading/testimonials/user-${globalIndex}.png`;
-        }
-
-        return (
-          <Tooltip key={index} title={user.name} placement={placementDirection}>
-            <ImageContainer $isActive={currentUser === user.name}>
-              <UserImage
-                onClick={() => setCurrentUser(user.name)}
-                src={imageSrc}
-                alt={user.name}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                whileHover="hover"
-                whileTap="tap"
-                variants={imageAnimation}
-                transition={{ 
-                  duration: 0.3, // Reduced from 0.4
-                  delay: index * 0.03, // Reduced from 0.05 for faster staggering
-                  type: "spring",
-                  stiffness: 300, // Increased from 260 for snappier movement
-                  damping: 15 // Decreased from 20 for faster bounce
-                }}
-              />
-            </ImageContainer>
-          </Tooltip>
-        );
-      })}
+      {usersList.map((user, index) => (
+        <Tooltip key={index} title={user.name} placement={placementDirection}>
+          <ImageContainer $isActive={currentUser === user.name}>
+            <UserImage
+              onClick={() => setCurrentUser(user.name)}
+              src={user.imageUrl}
+              alt={user.name}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              whileHover="hover"
+              whileTap="tap"
+              variants={imageAnimation}
+              transition={{ 
+                duration: 0.3, // Reduced from 0.4
+                delay: index * 0.03, // Reduced from 0.05 for faster staggering
+                type: "spring",
+                stiffness: 300, // Increased from 260 for snappier movement
+                damping: 15 // Decreased from 20 for faster bounce
+              }}
+            />
+          </ImageContainer>
+        </Tooltip>
+      ))}
     </UserRow>
   );
 

@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Divider, Drawer } from 'antd';
+import { Layout, Menu, Drawer } from 'antd';
 import { 
-  DashboardOutlined, 
-  FormOutlined, 
-  CarOutlined, 
-  TeamOutlined, 
-  SettingOutlined,
   LogoutOutlined,
-  UserOutlined,
-  WarningOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  AppstoreOutlined,
   FileSearchOutlined,
   FileProtectOutlined,
-  RocketOutlined,
-  CheckSquareOutlined,
   IdcardOutlined,
   HomeOutlined,
   FileAddOutlined    // Added this import for the registration icon
@@ -661,8 +651,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     <>
       <LogoContainer $collapsed={collapsed}>
         {themeToUse.currentTheme === 'themeDark' 
-          ? <img src="/src/assets/Lading/MotoTrackInvertedLogo.png" alt="MotoTrack" />
-          : <img src="/src/assets/Lading/MotoTrackLogo-2.png" alt="MotoTrack" />
+          ? <img src="https://res.cloudinary.com/dx87s3lws/image/upload/v1745288919/MotoTrackInvertedLogo_o0c2nj.png" alt="MotoTrack" />
+          : <img src="https://res.cloudinary.com/dx87s3lws/image/upload/v1745288750/MotoTrackLogo-2_tjislj.png" alt="MotoTrack" />
         }
       </LogoContainer>
       
@@ -670,15 +660,15 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       {themeToUse.currentTheme === 'themeDark' 
         ? <DividerImage 
             src={collapsed 
-              ? "/src/assets/Dashboard/CollapseDividerDarkMode.svg" 
-              : "/src/assets/Dashboard/DarkModeDivider.svg"} 
+              ? "https://res.cloudinary.com/dx87s3lws/image/upload/v1745288996/CollapseDividerDarkMode_dct1ta.svg" 
+              : "https://res.cloudinary.com/dx87s3lws/image/upload/v1745289032/DarkModeDivider_jgkszd.svg"} 
             alt="divider" 
             $collapsed={collapsed} 
           />
         : <DividerImage 
             src={collapsed 
-              ? "/src/assets/Dashboard/CollapseDividerLightMode.svg" 
-              : "/src/assets/Dashboard/LightModeDivider.svg"} 
+              ? "https://res.cloudinary.com/dx87s3lws/image/upload/v1745289126/CollapseDividerLightMode_uggfvs.svg" 
+              : "https://res.cloudinary.com/dx87s3lws/image/upload/v1745289137/LightModeDivider_casldd.svg"} 
             alt="divider" 
             $collapsed={collapsed} 
           />
@@ -696,15 +686,15 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       {themeToUse.currentTheme === 'themeDark' 
         ? <DividerImage 
             src={collapsed 
-              ? "/src/assets/Dashboard/CollapseDividerDarkMode.svg" 
-              : "/src/assets/Dashboard/DarkModeDivider.svg"} 
+              ? "https://res.cloudinary.com/dx87s3lws/image/upload/v1745288996/CollapseDividerDarkMode_dct1ta.svg" 
+              : "https://res.cloudinary.com/dx87s3lws/image/upload/v1745289032/DarkModeDivider_jgkszd.svg"}
             alt="divider" 
             $collapsed={collapsed} 
           />
         : <DividerImage 
             src={collapsed 
-              ? "/src/assets/Dashboard/CollapseDividerLightMode.svg" 
-              : "/src/assets/Dashboard/LightModeDivider.svg"} 
+              ? "https://res.cloudinary.com/dx87s3lws/image/upload/v1745289126/CollapseDividerLightMode_uggfvs.svg" 
+              : "https://res.cloudinary.com/dx87s3lws/image/upload/v1745289137/LightModeDivider_casldd.svg"} 
             alt="divider" 
             $collapsed={collapsed} 
           />
