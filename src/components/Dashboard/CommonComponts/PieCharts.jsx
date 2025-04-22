@@ -30,7 +30,8 @@ const ChartContainer = styled.div`
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid ${props => props.theme.token.titleColor}25;
-  height: 450px; // Altura fija para todos los componentes
+  height: 450px;
+  overflow: hidden; // Añadir para prevenir desbordamiento
 `;
 
 const ChartContent = styled.div`
@@ -40,16 +41,19 @@ const ChartContent = styled.div`
 `;
 
 const ChartDiv = styled.div`
-  flex: 3;
-  min-height: 300px; // Altura mínima para el gráfico
+  flex: 1;
+  min-height: 250px; // Reducir altura mínima
+  max-height: 300px; // Añadir altura máxima
 `;
 
 const BottomSection = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   border-top: 1px solid ${props => props.theme.token.titleColor}25;
+  overflow-y: auto; // Permitir scroll vertical si es necesario
+  max-height: 100px; // Limitar altura máxima
 `;
 
 const Title = styled.h3`
@@ -64,12 +68,17 @@ const LegendContainer = styled.div`
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
+  padding: 0.5rem;
+  width: 100%;
 `;
 
 const LegendItem = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  white-space: nowrap; // Evitar que el texto se rompa
+  font-size: 0.75rem; // Reducir tamaño de fuente
 `;
 
 const LegendColor = styled.div`
@@ -82,7 +91,10 @@ const LegendColor = styled.div`
 
 const LegendText = styled.div`
   color: ${props => props.theme.token.textColor};
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  max-width: 120px; // Limitar ancho máximo
+  overflow: hidden;
+  text-overflow: ellipsis; // Añadir ellipsis si el texto es muy largo
 `;
 
 const LegendPercentage = styled.div`

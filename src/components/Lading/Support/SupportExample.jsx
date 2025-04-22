@@ -129,7 +129,6 @@ function SupportExample() {
   const handleSubmit = async (values) => {
     setLoading(true);
     
-    // Simulate API call
     try {
       const response = await axios.post(`${api_url}/api/contact`, {
         nombre: values.nombre,
@@ -138,13 +137,17 @@ function SupportExample() {
         mensaje: values.mensaje
       });
 
-      if (response.data.success == true){
+      if (response.data.success === true) {
+        // Primero muestra el mensaje de éxito
         setSuccess(true);
-        form.resetFields();
-        // Reset success message after 5 seconds
+        
+        // Espera a que la animación de éxito se complete antes de resetear
         setTimeout(() => {
-          setSuccess(false);
-        }, 5000);
+          form.resetFields();
+        }, 300); // 300ms es la duración de la animación
+
+        // Reset success message after 5 seconds
+        setSuccess(false);
       } else {
         message.error('Hubo un error al enviar el mensaje. Por favor, inténtelo de nuevo.');
       }     
@@ -288,12 +291,14 @@ function SupportExample() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
             <StyledForm
               form={form}
               layout="vertical"
               onFinish={handleSubmit}
               requiredMark={false}
+              preserve={false}
             >
               <FormItemContainer variants={formItemVariants}>
                 <Form.Item

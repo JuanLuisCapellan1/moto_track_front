@@ -359,7 +359,7 @@ function MisMotocicletas({
                   { 
                     key: 'vehiculo.modelo.color', 
                     label: t.fields.color,
-                    getValue: (data) => data.vehiculo.modelo.color
+                    getValue: (data) => data.vehiculo.color
                   },
                   { 
                     key: 'vehiculo.chasis', 
