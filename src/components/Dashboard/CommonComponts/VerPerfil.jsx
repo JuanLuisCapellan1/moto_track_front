@@ -293,7 +293,7 @@ const VerPerfil = ({ visible, onClose, currentUser, isOwnProfile = false }) => {
       { label: "Email", value: userData?.correo || "---@mototrack.com" },
       { label: "Teléfono", value: userData?.datosPersonales?.telefono || "---" },
       { label: "Ubicación", value: `${userData?.datosPersonales?.ubicacion?.direccion + ' ' + userData?.datosPersonales?.ubicacion?.municipio?.nombre + ' ' + userData?.datosPersonales?.ubicacion?.provincia?.nombre}` || "Sede Central" },
-      { label: "Estado", value: isActive ? "Activo" : "Deshabilitado" }, // Agregar campo de estado
+      { label: "Estado", value: isActive ? "Activo" : userData?.estado }, // Agregar campo de estado
       { label: "Fecha de registro", value: userData?.fechaCreacion ? new Date(userData.fechaCreacion).toLocaleDateString() : "---" },
       { 
         label: "Cargo", 
@@ -325,12 +325,12 @@ const VerPerfil = ({ visible, onClose, currentUser, isOwnProfile = false }) => {
               {isActive ? (
                 <ActiveTag>Activo</ActiveTag>
               ) : (
-                <InactiveTag>Deshabilitado</InactiveTag>
+                <InactiveTag>{userData?.estado}</InactiveTag>
               )}
             </motion.div>
             <motion.div variants={itemVariants}>
               <RoleTag>
-                {(userData?.role || userData?.rol) === "administrador" ? "Admin" : (userData?.role || userData?.rol) !== "Usuario Básico" ? userData?.role : "Empleado"}
+                {userData?.tipoUsuario?.nombre|| "No especificado"}
               </RoleTag>
             </motion.div>
           </StatusBadges>

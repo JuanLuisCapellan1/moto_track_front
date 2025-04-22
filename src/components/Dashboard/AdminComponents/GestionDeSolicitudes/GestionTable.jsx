@@ -281,7 +281,6 @@ function GestionTable({ solicitudesData = [], onView, onAssign, onTableReady, on
 
   const api_url = import.meta.env.VITE_API_URL;
   const { getAccessToken } = useAuth();
-
   useEffect(() => {
     const fetchEmployee = async () => {
       try {

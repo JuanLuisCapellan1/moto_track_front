@@ -11,7 +11,7 @@ const { RangePicker } = DatePicker;
 
 const FormItem = styled(Form.Item)`
   margin-bottom: 16px;
-`;
+`; 
 
 const GestionFilter = ({ 
   isVisible, 
@@ -195,7 +195,7 @@ const GestionFilter = ({
               <Select placeholder={t.allStatuses}>
                 <Option value="all">{t.allStatuses}</Option>
                 {statuses.map(status => (
-                  <Option key={status.id} value={status.id}>{status.name}</Option>
+                  <Option key={status.id} value={status.name}>{status.name}</Option>
                 ))}
               </Select>
             </FormItem>

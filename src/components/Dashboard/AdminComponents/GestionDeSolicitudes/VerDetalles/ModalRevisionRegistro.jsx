@@ -125,8 +125,7 @@ const ModalRevisionRegistro = ({
   // Use the appropriate detail component based on status
   const getEstadoContent = () => {
     if (!data) return null;
-    
-    if (isReviewMode && data.estado === REGISTRO_STATUS.PENDIENTE) {
+    if (isReviewMode && data?.solicitud.estadoDecision === REGISTRO_STATUS.PENDIENTE) {
       // Show review form when in review mode and status is pending
       return (
         <EstadoReview 
@@ -142,12 +141,12 @@ const ModalRevisionRegistro = ({
       );
     } else {
       // Show appropriate detail view based on status
-      switch (data.estado) {
-        case REGISTRO_STATUS.APROBADO:
+      switch (data?.solicitud?.estadoDecision) {
+        case 'Aprobada':
           return <DetalleAprobado data={data} />;
-        case REGISTRO_STATUS.RECHAZADO:
+        case 'Rechazada':
           return <DetalleRechazado data={data} />;
-        case REGISTRO_STATUS.PENDIENTE:
+        case 'Pendiente':
         default:
           return <DetallePendiente data={data} />;
       }
@@ -155,7 +154,6 @@ const ModalRevisionRegistro = ({
   };
 
   if (!data) return null;
-
   return (
     <Modal
       show={visible}
@@ -171,7 +169,9 @@ const ModalRevisionRegistro = ({
           <ModalTitle level={4}>
             {isReviewMode ? t.reviewApplication : t.viewDetails}
           </ModalTitle>
-          <StatusTag status={data.estado} />
+          <StatusTag status={
+            data?.solicitud?.estadoDecision === 'Pendiente' ? REGISTRO_STATUS.PENDIENTE : data?.solicitud?.estadoDecision === 'Aprobada' ? REGISTRO_STATUS.APROBADO : REGISTRO_STATUS.RECHAZADO
+          } />
         </TitleContainer>
 
         <TabsDeDetalles

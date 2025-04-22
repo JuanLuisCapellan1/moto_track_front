@@ -345,6 +345,7 @@ function AdminSolicitudes() {
               isVisible={filtersVisible}
               onClose={() => setFiltersVisible(false)}
               onApplyFilters={handleApplyFilters}
+              statuses={[{id: 1, name: 'Aprobada'}, {id: 2, name: 'Rechazada'}, {id: 3, name: 'Pendiente'}]}
             />
             
             <Spin spinning={isLoading} tip={language === 'es' ? "Cargando datos..." : "Loading data..."}>

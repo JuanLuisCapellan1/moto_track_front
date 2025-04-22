@@ -410,6 +410,7 @@ const CrearEditarEmpleado = ({ visible, onClose, empleadoData, isEditing }) => {
     try {
       if(isEditing){
         // Realizar el PUT request a /ubicacion
+        console.log(empleadoData, value);
         const response = await axios.put(`${api_url}/api/ubicacion`, {
           idUbicacion: empleadoData?.datosPersonales?.ubicacion?.id || null, // ID de la ubicación si existe
           direccion: form.getFieldValue('direccion'), // Obtener la dirección del formulario

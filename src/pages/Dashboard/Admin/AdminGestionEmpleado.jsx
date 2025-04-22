@@ -54,7 +54,7 @@ function AdminGestionEmpleado() {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const { getAccessToken } = useAuth();
   const [loading, setLoading] = useState(true); // Estado para el spinner
-
+  const [employees, setEmployees] = useState(null);
   const notification = useNotification();
   const tableColumnsRef = useRef([]);
   
@@ -86,9 +86,27 @@ function AdminGestionEmpleado() {
     }
   };
 
+  const fetchEmployees = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/statistics/dashboard?=vista=empleados`, {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`
+        }
+      });
+      setEmployees(response.data.data);
+    } catch (error) {
+      console.error('Error fetching employees:', error);
+      notification.error({
+        message: 'Error',
+        description: 'No se pudieron cargar los empleados. Por favor, inténtelo de nuevo más tarde.'
+      });
+    }
+  };
+  
   // Initialize with employee data
   useEffect(() => {
     fetchDataEmployee();
+    fetchEmployees();
   }, []);
 
   // Extract unique roles and statuses for filters
@@ -279,7 +297,7 @@ function AdminGestionEmpleado() {
         <Row gutter={[16, 24]} className="dashboard-row">
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
             <SectionContainer>
-              <EmpleadosMetricsCards />
+              <EmpleadosMetricsCards data={employees} /> 
             </SectionContainer>
           </Col>
         </Row>
