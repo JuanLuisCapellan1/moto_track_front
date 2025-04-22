@@ -140,51 +140,32 @@ function AdminGestionEmpleado() {
   };
 
   const applyFiltersAndSearch = (search, filters) => {
-    let result = originalData; // Start with the original data
+    let result = [...originalData.data]; // Create a copy of the original data array
 
     if (filters.cedula && filters.cedula.trim() !== '') {
       const lowercaseCedula = filters.cedula;
-      result = result.data.filter(employee =>
-        employee.cedula && employee.cedula.includes(lowercaseCedula)
+      result = result.filter(employee =>
+        employee?.datosPersonales?.cedula && employee.datosPersonales.cedula.includes(lowercaseCedula)
       );
     }
 
     if (filters.cargo && filters.cargo !== 'all') {
-      result = result.data.filter(employee => employee?.datosPersonales?.tipoPersona?.nombre === filters.cargo);
+      result = result.filter(employee => 
+        employee?.datosPersonales?.tipoPersona?.nombre === filters.cargo
+      );
     }
 
     if (filters.status && filters.status !== 'all') {
-      result = result.data.filter(employee => employee.estado === filters.status);
+      result = result.filter(employee => employee.estado === filters.status);
     }
 
     if (search && search.trim() !== '') {
-      console.log('search: ', search);
       const lowercaseSearch = search.toLowerCase();
-      if(result.data) {
-        result = result.data.filter(employee =>
-          `${employee.nombres} ${employee.apellidos}`.toLowerCase().includes(lowercaseSearch) ||
-          (employee.cedula && employee.cedula.toLowerCase().includes(lowercaseSearch))
-        );
-      }
-      else {
-        result = result.filter(employee =>
-          `${employee.nombres} ${employee.apellidos}`.toLowerCase().includes(lowercaseSearch) ||
-          (employee.cedula && employee.cedula.toLowerCase().includes(lowercaseSearch))
-        );
-      }
-    } else {
-      filters.search = ''; // Reset search term if empty
-      //console.log('filters: ', filters);
-      if (
-        (!filters.search || filters.search.trim() === '') && // Si search es vacío o no está definido
-        (!filters.cedula || filters.cedula.trim() === '') && // Si cedula es vacío o no está definido
-        (filters.cargo === 'all') && // Si cargo es "all"
-        (filters.status === 'all') // Si status es "all"
-      ) {
-        result = originalData.data; // Reset to original data if search is empty
-        setFilteredData({ ...filteredData, data: result });
-        return;
-      }
+      result = result.filter(employee =>
+        `${employee.nombres} ${employee.apellidos}`.toLowerCase().includes(lowercaseSearch) ||
+        (employee?.datosPersonales?.cedula && 
+         employee.datosPersonales.cedula.toLowerCase().includes(lowercaseSearch))
+      );
     }
 
     if (result.length < 1) {
@@ -194,7 +175,8 @@ function AdminGestionEmpleado() {
       );
     }
 
-    setFilteredData({...filteredData, data: result}); // Update filteredData directly with the filtered result
+    // Update filteredData with the new structure
+    setFilteredData({ data: result });
   };
 
   // Handler functions for the table actions
@@ -267,21 +249,34 @@ function AdminGestionEmpleado() {
 
   const handleExportPDF = async () => {
     try {
+      // Verifica si hay datos para exportar
+      if (!tableColumnsRef.current || !filteredData?.data?.length) {
+        notification.warning({
+          message: language === 'es' ? 'Advertencia' : 'Warning',
+          description: language === 'es'
+            ? 'No hay datos para exportar'
+            : 'No data to export'
+        });
+        return;
+      }
+
+      // Asegúrate de pasar solo los datos filtrados, no el objeto completo
       await exportTableToPdf({
         columns: tableColumnsRef.current,
-        data: filteredData,
+        data: { data: filteredData.data }, // Envuelve los datos en un objeto con propiedad data
         fileName: language === 'es' ? 'empleados' : 'employees',
         title: language === 'es' ? 'Lista de Empleados' : 'Employee List',
-        notificationSystem: notification
+        notificationSystem: notification,
+        exportEmployees: true
       });
     } catch (error) {
       console.error('Export error:', error);
-      notification.error(
-        language === 'es' ? 'Error' : 'Error', 
-        language === 'es' 
-          ? 'Error al generar el PDF' 
+      notification.error({
+        message: language === 'es' ? 'Error' : 'Error',
+        description: language === 'es'
+          ? 'Error al generar el PDF'
           : 'Error generating PDF'
-      );
+      });
     }
   };
 

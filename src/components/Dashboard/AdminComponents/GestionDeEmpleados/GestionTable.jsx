@@ -37,7 +37,27 @@ const TableContainer = styled.div`
   margin-bottom: 24px;
   border: 1px solid ${props => props.theme.token.titleColor}25;
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+
+  /* Webkit scrollbar styles */
+  &::-webkit-scrollbar {
+    height: 8px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${props => hexToRgba(props.theme?.token?.primaryColor || '#1890ff', 0.3)};
+    border-radius: 4px;
+
+    &:hover {
+      background-color: ${props => hexToRgba(props.theme?.token?.primaryColor || '#1890ff', 0.5)};
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${props => props.theme?.token?.contentBg || '#f0f0f0'};
+    border-radius: 4px;
+  }
 `;
 
 // Actualizar el estilo del TableTitle para que se vea bien fuera del contenedor

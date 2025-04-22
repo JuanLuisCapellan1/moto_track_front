@@ -25,6 +25,7 @@ export const exportTableToPdf = async ({
   fileName = 'table-export',
   title = 'Table Export',
   subtitle = '',
+  exportEmployees = false,
   transformData,
   onSuccess,
   onError,
@@ -79,7 +80,7 @@ export const exportTableToPdf = async ({
   
   // Define purple color - Updated to #635BFF
   const primaryColor = [99, 91, 255]; // RGB for #635BFF
-  
+
   try {
     // First check if jsPDF is properly loaded
     if (!jsPDF) {
@@ -146,7 +147,17 @@ export const exportTableToPdf = async ({
     // Map data to format expected by jspdf-autotable
     const tableData = processedData.map(record => {
       // Check if the record is in flat format
-      if (isFlatFormat(record)) {        
+      if(exportEmployees) {
+        return {
+          id: record.id,
+          nombres: record.nombres + ' ' + record.apellidos,
+          correo: record.correo,
+          'datosPersonales.telefono': record?.datosPersonales?.telefono ?? 'No Disponible',
+          'datosPersonales.cedula': record?.datosPersonales?.cedula ?? 'No Disponible',
+          tipoUsuario: record.tipoUsuario.nombre,
+          estado: t[record.estado] || record.estado,
+        };
+      } else if (isFlatFormat(record)) {
         // Handle flat format directly
         return {
           id: record.id,
@@ -196,7 +207,6 @@ export const exportTableToPdf = async ({
       }
     });
 
-    console.log('tableData:', tableData);
     // Create the document
     const doc = new jsPDF({
       orientation: 'landscape',

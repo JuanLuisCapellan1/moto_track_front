@@ -135,65 +135,59 @@ function AdminSolicitudes() {
   };
 
   const applyFiltersAndSearch = (search, filters) => {
-    let result = originalData;
-
-    // Apply search if there's a search term
+    let result = { ...originalData }; // Copia la estructura completa
+    let filteredResults = [...originalData.data]; // Trabaja con los datos
+  
+    // Aplicar búsqueda
     if (search && search.trim() !== '') {
       const lowercaseSearch = search.toLowerCase();
-      if (result.data) {
-        result = {
-          ...result,
-          data: result.data.filter(record =>
-            record.solicitud.idSolicitud.toString().includes(lowercaseSearch) ||
-            `${record.ciudadano.nombres} ${record.ciudadano.apellidos}`.toLowerCase().includes(lowercaseSearch) ||
-            record.vehiculo.chasis.toLowerCase().includes(lowercaseSearch)
-          )
-        };
-      }
+      filteredResults = filteredResults.filter(record =>
+        record.solicitud.idSolicitud.toString().includes(lowercaseSearch) ||
+        `${record.ciudadano.nombres} ${record.ciudadano.apellidos}`.toLowerCase().includes(lowercaseSearch) ||
+        record.vehiculo.chasis.toLowerCase().includes(lowercaseSearch)
+      );
     }
-
-    // Apply filters
-    if (result.data) {
-      let filteredResults = result.data;
-
-      if (filters.brand && filters.brand !== 'all') {
-        filteredResults = filteredResults.filter(
-          record => record.vehiculo.marca.idMarca === filters.brand
-        );
-      }
-
-      if (filters.model && filters.model !== 'all') {
-        filteredResults = filteredResults.filter(
-          record => record.vehiculo.modelo.idModelo === filters.model
-        );
-      }
-
-      if (filters.status && filters.status !== 'all') {
-        filteredResults = filteredResults.filter(
-          record => record.solicitud.estadoDecision === filters.status
-        );
-      }
-
-      if (filters.employee && Array.isArray(filters.employee) && !filters.employee.includes('all')) {
-        filteredResults = filteredResults.filter(record =>
-          filters.employee.includes(record.empleado?.idPersona?.toString())
-        );
-      }
-
-      if (filters.dateRange && filters.dateRange[0] && filters.dateRange[1]) {
-        const startDate = filters.dateRange[0].startOf('day');
-        const endDate = filters.dateRange[1].endOf('day');
-        
-        filteredResults = filteredResults.filter(record => {
-          const recordDate = new Date(record.solicitud.fechaRegistro);
-          return recordDate >= startDate.toDate() && recordDate <= endDate.toDate();
-        });
-      }
-
-      result = { ...result, data: filteredResults };
+  
+    // Aplicar filtros
+    if (filters.brand && filters.brand !== 'all') {
+      filteredResults = filteredResults.filter(
+        record => record.vehiculo.marca.idMarca === filters.brand
+      );
     }
-
-    setFilteredData(result);
+  
+    if (filters.model && filters.model !== 'all') {
+      filteredResults = filteredResults.filter(
+        record => record.vehiculo.modelo.idModelo === filters.model
+      );
+    }
+  
+    if (filters.status && filters.status !== 'all') {
+      filteredResults = filteredResults.filter(
+        record => record.solicitud.estadoDecision === filters.status
+      );
+    }
+  
+    if (filters.employee && Array.isArray(filters.employee) && !filters.employee.includes('all')) {
+      filteredResults = filteredResults.filter(record =>
+        filters.employee.includes(record.empleado?.idPersona?.toString())
+      );
+    }
+  
+    if (filters.dateRange && filters.dateRange[0] && filters.dateRange[1]) {
+      const startDate = filters.dateRange[0].startOf('day');
+      const endDate = filters.dateRange[1].endOf('day');
+      
+      filteredResults = filteredResults.filter(record => {
+        const recordDate = new Date(record.solicitud.fechaRegistro);
+        return recordDate >= startDate.toDate() && recordDate <= endDate.toDate();
+      });
+    }
+  
+    // Actualizar filteredData manteniendo la estructura
+    setFilteredData({
+      ...result,
+      data: filteredResults
+    });
   };
 
   const handleView = (record) => {
@@ -245,7 +239,8 @@ function AdminSolicitudes() {
 
   const handleExportPDF = async () => {
     try {
-      if (!tableColumnsRef.current || !filteredData.data?.length) {
+      // Verifica si hay datos para exportar
+      if (!tableColumnsRef.current || !filteredData?.data?.length) {
         notification.warning({
           message: language === 'es' ? 'Advertencia' : 'Warning',
           description: language === 'es'
@@ -260,28 +255,30 @@ function AdminSolicitudes() {
       // Add filter information to subtitle
       if (activeFilters.brand && activeFilters.brand !== 'all') {
         const brand = filteredData.data.find(record => 
-          record.vehiculo.marca.id === activeFilters.brand
+          record.vehiculo.marca.idMarca === activeFilters.brand
         )?.vehiculo.marca.nombre;
         if (brand) subtitleParts.push(`Marca: ${brand}`);
       }
 
-      // Transform data for PDF
-      const transformedData = filteredData.data.map(record => ({
-        id: record.solicitud.idSolicitud,
-        ciudadano: `${record.ciudadano.nombres} ${record.ciudadano.apellidos}`,
-        fechaSolicitud: new Date(record.solicitud.fechaRegistro).toLocaleDateString('es-ES'),
-        marca: record.vehiculo.marca.nombre,
-        modelo: record.vehiculo.modelo.nombre,
-        chasis: record.vehiculo.chasis,
-        estado: record.solicitud.estadoDecision,
-        empleado: record.empleado 
-          ? `${record.empleado.nombres} ${record.empleado.apellidos}`
-          : 'No asignado'
-      }));
+      // Transform the filtered data
+      const transformedData = {
+        data: filteredData.data.map(record => ({
+          id: record.solicitud.idSolicitud,
+          ciudadano: `${record.ciudadano.nombres} ${record.ciudadano.apellidos}`,
+          fechaSolicitud: new Date(record.solicitud.fechaRegistro).toLocaleDateString('es-ES'),
+          marca: record.vehiculo.marca.nombre,
+          modelo: record.vehiculo.modelo.nombre,
+          chasis: record.vehiculo.chasis,
+          estado: record.solicitud.estadoDecision,
+          empleado: record.empleado 
+            ? `${record.empleado.nombres} ${record.empleado.apellidos}`
+            : 'No asignado'
+        }))
+      };
 
       await exportTableToPdf({
         columns: tableColumnsRef.current,
-        data: transformedData,
+        data: transformedData, // Pasamos el objeto con la estructura correcta
         fileName: language === 'es' ? 'solicitudes-admin' : 'admin-requests',
         title: language === 'es' ? 'Gestión de Solicitudes' : 'Request Management',
         subtitle: subtitleParts.join(' | '),
