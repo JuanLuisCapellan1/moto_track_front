@@ -46,12 +46,15 @@ const TableContainer = styled.div`
   position: relative;
   overflow-x: auto;
 
-  /* Webkit scrollbar styles */
+  -webkit-overflow-scrolling: touch;
+
   &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background-color: transparent;
+    display: none;
   }
+  
+ 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   &::-webkit-scrollbar-thumb {
     background-color: ${props => hexToRgba(props.theme?.token?.primaryColor || '#1890ff', 0.3)};
@@ -149,6 +152,30 @@ const StyledTable = styled(Table)`
   // Fix dropdown text in dark mode (for filters)
   .ant-dropdown-menu-item {
     color: ${props => props.theme?.token?.titleColor || 'inherit'};
+  }
+
+  @media (max-width: 768px) {
+    .ant-table {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      white-space: nowrap;
+      padding: 12px 8px;
+    }
+
+    .ant-space {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      
+      button {
+        width: 100%;
+        margin: 0;
+      }
+    }
   }
 `;
 

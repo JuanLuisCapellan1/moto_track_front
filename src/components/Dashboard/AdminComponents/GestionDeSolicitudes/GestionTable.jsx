@@ -42,7 +42,15 @@ const TableContainer = styled.div`
   margin-bottom: 24px;
   border: 1px solid ${props => props.theme.token.titleColor}25;
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+ 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 // Actualizar el estilo del TableTitle para que se vea bien fuera del contenedor
@@ -120,6 +128,30 @@ const StyledTable = styled(Table)`
   // Fix dropdown text in dark mode (for filters)
   .ant-dropdown-menu-item {
     color: ${props => props.theme?.token?.titleColor || 'inherit'};
+  }
+
+  @media (max-width: 768px) {
+    .ant-table {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      white-space: nowrap;
+      padding: 12px 8px;
+    }
+
+    .ant-space {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      
+      button {
+        width: 100%;
+        margin: 0;
+      }
+    }
   }
 `;
 
