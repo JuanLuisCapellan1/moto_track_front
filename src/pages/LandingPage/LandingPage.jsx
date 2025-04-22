@@ -167,7 +167,6 @@ function LandingPage() {
 
   return (
     <>
-    
       <LandingContainer>
         <Nav />
         
